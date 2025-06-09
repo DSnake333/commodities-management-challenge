@@ -12,11 +12,13 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, _password: string) => {  // Add underscore to prefix unused param
+    // Validate email patterns
     if (email !== 'manager@example.com' && email !== 'keeper@example.com') {
       throw new Error('Invalid credentials');
     }
-
+  
+    // Mock API call
     const response = await new Promise<{ data: User }>((resolve, reject) => {
       setTimeout(() => {
         if (email === 'manager@example.com' || email === 'keeper@example.com') {
