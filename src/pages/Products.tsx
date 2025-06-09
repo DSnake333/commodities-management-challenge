@@ -177,7 +177,7 @@ export const Products = () => {
 
       {isFormOpen && (
         <ProductForm
-          initialData={editingProduct}
+          initialData={editingProduct || undefined}
           onSave={handleSaveProduct}
           onCancel={() => setIsFormOpen(false)}
         />
