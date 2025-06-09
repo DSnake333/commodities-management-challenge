@@ -13,17 +13,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = async (email: string, password: string) => {
-    // Mock API call
-    const response = await new Promise<{ data: User }>((resolve) => {
+    if (email !== 'manager@example.com' && email !== 'keeper@example.com') {
+      throw new Error('Invalid credentials');
+    }
+
+    const response = await new Promise<{ data: User }>((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          data: {
-            id: '1',
-            email,
-            role: email.includes('manager') ? 'manager' : 'store_keeper',
-            token: 'mock-token'
-          }
-        });
+        if (email === 'manager@example.com' || email === 'keeper@example.com') {
+          resolve({
+            data: {
+              id: '1',
+              email,
+              role: email === 'manager@example.com' ? 'manager' : 'store_keeper',
+              token: 'mock-token'
+            }
+          });
+        } else {
+          reject(new Error('Invalid credentials'));
+        }
       }, 500);
     });
 
